@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 6%;
+    --foreground: 210 20% 92%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 210 20% 92%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 210 20% 92%;
+
+    --primary: 25 95% 55%;
+    --primary-foreground: 220 20% 6%;
+
+    --secondary: 220 15% 16%;
+    --secondary-foreground: 210 20% 85%;
+
+    --muted: 220 15% 14%;
+    --muted-foreground: 215 15% 55%;
+
+    --accent: 25 95% 55%;
+    --accent-foreground: 220 20% 6%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 25 95% 55%;
+
+    --radius: 0.5rem;
+
+    --steel: 215 15% 70%;
+    --chrome: 210 10% 85%;
+    --brass: 38 70% 55%;
+
+    --sidebar-background: 220 18% 8%;
+    --sidebar-foreground: 210 20% 92%;
+    --sidebar-primary: 25 95% 55%;
+    --sidebar-primary-foreground: 220 20% 6%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 210 20% 92%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 25 95% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(25 95% 55%), hsl(38 70% 55%), hsl(25 95% 65%));
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 40px -10px hsl(25 95% 55% / 0.5), 0 0 80px -20px hsl(25 95% 55% / 0.2);
+  }
+
+  .glow-primary-soft {
+    box-shadow: 0 4px 30px -8px hsl(25 95% 55% / 0.3);
+  }
+
+  .glass {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50;
+  }
+
+  .glass-strong {
+    background: linear-gradient(135deg, hsl(220 18% 10% / 0.8), hsl(220 18% 12% / 0.6));
+    @apply backdrop-blur-2xl border border-border/40;
+  }
+
+  .section-padding {
+    @apply px-6 py-24 md:px-12 lg:px-20 xl:px-32;
+  }
+
+  .grid-pattern {
+    background-image:
+      linear-gradient(hsl(220 15% 18% / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(220 15% 18% / 0.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .line-accent {
+    @apply relative;
+  }
+
+  .line-accent::before {
+    content: '';
+    @apply absolute -left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-brass to-transparent;
+  }
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Counter shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, hsl(210 20% 92%), hsl(25 95% 55%), hsl(38 70% 55%), hsl(210 20% 92%));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Pulse ring */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.pulse-ring::after {
+  content: '';
+  @apply absolute inset-0 rounded-full border-2 border-primary;
+  animation: pulse-ring 2s ease-out infinite;
+}
